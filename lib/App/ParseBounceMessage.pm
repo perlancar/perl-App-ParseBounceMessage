@@ -16,11 +16,13 @@ $SPEC{parse_bounce_message} = {
         message_file => {
             summary => 'A file containing a single email message',
             schema => 'filename*',
+            default => '-',
             description => <<'_',
 
 Dash (`-`) means to get the message from standard input.
 
 _
+            pos => 0,
         },
     },
 };
@@ -30,7 +32,6 @@ sub parse_bounce_message {
 
     my %args = @_;
 
-    my $message_file = ;
     my $message = $args{message_file} eq '-' ?
         do { local $/; <STDIN> } :
         do { File::Slurper::read_text($args{message_file}) };
